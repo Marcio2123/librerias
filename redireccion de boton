@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantalla de inicio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .pantalla {
+      display: none;
+      width: 90%;
+      max-width: 400px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    .pantalla.activa {
+      display: block;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla de Login -->
+  <div class="pantalla activa" id="pantallaLogin">
+    <h2>Iniciar Sesión</h2>
+    <input type="email" id="correo" placeholder="Correo electrónico" required />
+    <input type="password" id="password" placeholder="Contraseña" required />
+    <button id="btnLogin">Ingresar</button>
+    <p class="error" id="errorMsg">Correo o contraseña incorrectos</p>
+  </div>
+
+  <!-- Pantalla de Admin -->
+  <div class="pantalla" id="pantallaAdmin">
+    <h2>Bienvenido Administrador</h2>
+    <p>Esta es la pantalla del panel de administración.</p>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
+  </div>
+
+  <!-- Pantalla de Usuario -->
+  <div class="pantalla" id="pantallaUsuario">
+    <h2>Bienvenido Usuario</h2>
+    <p>Esta es la pantalla del usuario normal.</p>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
+  </div>
+
+  <script>
+    const pantallaLogin = document.getElementById('pantallaLogin');
+    const pantallaAdmin = document.getElementById('pantallaAdmin');
+    const pantallaUsuario = document.getElementById('pantallaUsuario');
+    const errorMsg = document.getElementById('errorMsg');
+
+    document.getElementById('btnLogin').addEventListener('click', function() {
+      const correo = document.getElementById('correo').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Simulación de credenciales
+      if (correo === "admin@ejemplo.com" && password === "1234") {
+        mostrarPantalla(pantallaAdmin);
+      } 
+      else if (correo === "usuario@ejemplo.com" && password === "abcd") {
+        mostrarPantalla(pantallaUsuario);
+      } 
+      else {
+        errorMsg.style.display = "block";
+      }
+    });
+
+    function mostrarPantalla(pantalla) {
+      // Oculta todas las pantallas
+      document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+      // Muestra la seleccionada
+      pantalla.classList.add('activa');
+      errorMsg.style.display = "none";
+    }
+
+    function cerrarSesion() {
+      document.getElementById('correo').value = "";
+      document.getElementById('password').value = "";
+      mostrarPantalla(pantallaLogin);
+    }
+  </script>
+
+</body>
+</html>
